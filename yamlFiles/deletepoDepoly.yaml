@@ -13,6 +13,7 @@ spec:
       labels:
         app: deletepod
     spec:
+      serviceAccountName: api-service-account
       containers:
       - name: deletepod-container
         image: aby0516/deletepod:v2

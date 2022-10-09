@@ -6,26 +6,23 @@ metadata:
  namespace: test
 ---
 apiVersion: rbac.authorization.k8s.io/v1
-kind: Role
+kind: ClusterRole
 metadata:
   name: pod-reader
   namespace: test
 rules:
-- apiGroups: [ "" ]
-  resources: [ "pods", "services"]
-  verbs: [ "get", "list", "watch", "delete"]
-- apiGroups: [ "extensions" ]
-  resources: [ "deployments" ]
+- apiGroups: [ "", "rbac.authorization.k8s.io" ]
+  resources: [ "deployments", "pods", "services", "namespaces"]
   verbs: [ "get", "list", "watch", "delete"]
 ---
 apiVersion: rbac.authorization.k8s.io/v1
-kind: RoleBinding
+kind: ClusterRoleBinding
 metadata:
   name: default-pod-reader
   namespace: test
 roleRef:
   apiGroup: rbac.authorization.k8s.io
-  kind: Role
+  kind: ClusterRole
   name: pod-reader
 subjects:
 - kind: ServiceAccount
