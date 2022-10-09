@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: deletepod
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: deletepod
+  template:
+    metadata:
+      labels:
+        app: deletepod
+    spec:
+      containers:
+      - name: deletepod-container
+        image: aby0516/deletepod:v2
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 3000

@@ -6,8 +6,6 @@ import (
 
 	"github.com/abyProjects/deletepod/cmd"
 
-	// "strings"
-
 	"context"
 	"log"
 	"path/filepath"
@@ -25,7 +23,7 @@ import (
 func inOrOutClusterCheck() bool {
 	var kubeconfig string
 
-	if home := homedir.HomeDir(); home != "" {
+	if home,_ := os.UserHomeDir(); home != "" {
 		kubeconfig = filepath.Join(home, ".kube", "config")
 	} else {
 		return false
@@ -55,6 +53,7 @@ func main() {
 	)
 
 	if inOrOutClusterCheck() {
+		log.Println("out cluster")
 		kubeconfig = flag.String("kubeconfig", filepath.Join(homedir.HomeDir(), ".kube", "config"), "(optional) absolute path to the kubeconfig file")
 		flag.Parse()
 
@@ -71,6 +70,7 @@ func main() {
 		}
 
 	} else {
+		log.Println("in cluster")
 		config, err = rest.InClusterConfig()
 		if err != nil {
 			panic(err.Error())
@@ -105,12 +105,11 @@ func main() {
 		if count > 0 {
 			log.Printf("found %d pod(s) with name %s", count, podName)
 			log.Println(deletePodName)
-		}else {
+		} else {
 			log.Printf("%d pod(s) with name %s", count, podName)
 		}
 
 		for _, pod := range deletePodName {
-			log.Println("for")
 			if len(deletePodName) < 1 {
 				log.Printf("Pod: %s not found in namespace: %s\n", podName, podNamespace)
 				break
