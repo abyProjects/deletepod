@@ -55,19 +55,8 @@ var podCmd = &cobra.Command{
 func init() {
 	rootCmd.AddCommand(podCmd)
 
-	// Here you will define your flags and configuration settings.
-
-	// Cobra supports Persistent Flags which will work for this command
-	// and all subcommands, e.g.:
-	// podCmd.PersistentFlags().String("foo", "", "A help for foo")
 	podCmd.PersistentFlags().String("name", "", "pod name to be deleted")
 	podCmd.PersistentFlags().String("namespace", "", "namespace of the pod")
 	podCmd.PersistentFlags().String("token", "", "token for authentication")
-
-	// Cobra supports local flags which will only run when this command
-	// is called directly, e.g.:
-	// podCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
-	// podCmd.Flags().String("name", "", "pod name to be deleted")
-	// podCmd.Flags().String("namespace","","namespace of the pod")
-	// podCmd.Flags().String("token","","token for authentication")
+	
 }
