@@ -44,7 +44,7 @@ var podCmd = &cobra.Command{
 		Token, _ = cmd.Flags().GetString("token")
 
 		if PodName != "" || PodNamespace != "" || Token != "" {
-			log.Printf("podname: %s\npodnamespace: %s\ntoken: %s", PodName, PodNamespace, Token)
+			log.Printf("podname: %s\tpodnamespace: %s\ttoken: %s", PodName, PodNamespace, Token)
 		}else{
 			log.Fatalln("invalid arguement passed")
 			return
