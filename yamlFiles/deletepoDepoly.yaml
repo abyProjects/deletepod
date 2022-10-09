@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: deletepod
-  namespace: default
+  namespace: test
 spec:
   replicas: 1
   selector:
@@ -20,6 +20,6 @@ spec:
           limits:
             memory: "128Mi"
             cpu: "500m"
-        imagePullPolicy: Always
+        imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 3000
