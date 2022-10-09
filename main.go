@@ -3,6 +3,7 @@ package main
 import (
 	"flag"
 	"os"
+	"io/ioutil"
 
 	"github.com/abyProjects/deletepod/cmd"
 
@@ -19,6 +20,8 @@ import (
 	"k8s.io/client-go/tools/clientcmd"
 	"k8s.io/client-go/util/homedir"
 )
+
+const expectedToken = "abcd"
 
 func inOrOutClusterCheck() bool {
 	var kubeconfig string
@@ -42,7 +45,25 @@ func main() {
 
 	podName := cmd.PodName
 	podNamespace := cmd.PodNamespace
-	// token := cmd.Token
+	token := cmd.Token
+
+	// check if token provided is file path
+	if _, err := os.Stat(token); err == nil {
+		fileContent, err := ioutil.ReadFile(token)
+		if err != nil {
+			log.Println("couldn't read from file")
+			log.Fatal(err)
+		}
+		fileContentString := string(fileContent)
+		if fileContentString != expectedToken {
+			log.Fatalln("user authentication failed")
+		}
+	}else {
+		if token != expectedToken {
+			log.Fatalln("user authentication failed")
+		}
+	}
+	log.Println("user authentication successfull")
 
 	var (
 		deletePodName []string
